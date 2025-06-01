@@ -9,7 +9,7 @@ namespace Blinkenlights.Basic.App
         {
             if (args.Length != 1)
             {
-                Console.WriteLine("Usage BasicInterpreterApp <programFile>");
+                Console.WriteLine("Usage: dotnet run <programFile>");
                 return;
             }
 
