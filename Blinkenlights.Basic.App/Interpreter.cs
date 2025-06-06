@@ -61,6 +61,11 @@ namespace Blinkenlights.Basic.App
             }
         }
 
+        public void ExecuteStatement(IStatement statement)
+        {
+            statement.Execute(this);
+        }
+
         public void Stop()
         {
             ErrorWriter.WriteLine($"! Stopped at line {_currentLineNumber}");

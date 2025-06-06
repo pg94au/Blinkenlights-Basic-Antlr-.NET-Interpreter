@@ -21,7 +21,7 @@ endStatement : 'END' ;
 forStatement : 'FOR' VARNAME '=' INT 'TO' INT ;
 gosubStatement : 'GOSUB' INT ;
 gotoStatement : 'GOTO' INT ;
-ifStatement : 'IF' equation 'THEN' INT ;
+ifStatement : 'IF' equation 'THEN' (statement | INT) ;
 inputStatement : 'INPUT' VARNAME ;
 letStatement : 'LET' VARNAME '=' expression ;
 nextStatement : 'NEXT' VARNAME ;
