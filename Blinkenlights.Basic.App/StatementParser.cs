@@ -17,7 +17,7 @@ namespace Blinkenlights.Basic.App
             var parser = new BasicParser(tokens, output, error);
             var tree = parser.program();
 
-            var visitor = new ProgramVisitor();
+            var visitor = new ProgramVisitor(error);
             visitor.Visit(tree);
 
             var statements = visitor.Statements;

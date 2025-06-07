@@ -142,6 +142,17 @@ namespace Blinkenlights.Basic.Tests.Statements
             Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(250));
         }
 
-        //TODO: Cannot utilize loop statements (FOR,NEXT) in IF statement.
+        [Test]
+        public void ConditionalStatementCannotCallLoopStatements()
+        {
+            @"
+                10 LET X = 1
+                20 IF X > 0 THEN FOR Y = 1 TO 10
+                30 NEXT Y
+                40 END
+            ".ExecuteWithError(out var output);
+
+            Assert.That(output, Contains.Substring("Illegal"));
+        }
     }
 }

@@ -1,9 +1,18 @@
 ﻿using Blinkenlights.Basic.App.Statements;
 using Blinkenlights.Basic.Gen;
+using System;
+using System.IO;
 
 namespace Blinkenlights.Basic.App.Visitors;
 public class StatementVisitor : BasicBaseVisitor<IStatement>
 {
+    private readonly TextWriter _error;
+    
+    public StatementVisitor(TextWriter error)
+    {
+        _error = error;
+    }
+
     public override IStatement VisitEndStatement(BasicParser.EndStatementContext context)
     {
         var endStatement = new EndStatement();
@@ -43,12 +52,16 @@ public class StatementVisitor : BasicBaseVisitor<IStatement>
         var equationVisitor = new EquationVisitor();
         var equation = equationVisitor.Visit(context.equation());
 
-        var statementVisitor = new StatementVisitor();
-
         IfStatement ifStatement;
         if (context.statement() != null)
         {
-            var statement = statementVisitor.Visit(context.statement());
+            var statement = Visit(context.statement());
+
+            if (statement is ForStatement or NextStatement)
+            {
+                _error.WriteLine($"Illegal statement used with IF: {statement.GetType().Name}");
+            }
+
             ifStatement = new IfStatement(equation, statement);
         }
         else
