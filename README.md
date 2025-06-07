@@ -7,11 +7,11 @@ You can build and run this with the already generated antlr source in the Blinke
 
 ```
 cd Blinkenlights.Basic.Gen
-java -jar ../antlr-4.12.0-complete.jar -Dlanguage=CSharp ../antlr/Basic.g4 -visitor -package Blinkenlights.Basic.Gen
+java -jar ../antlr-4.13.2-complete.jar -Dlanguage=CSharp ../antlr/Basic.g4 -visitor -package Blinkenlights.Basic.Gen
 ```
 
 To get the antlr jar file:
 
 ```
-wget https://www.antlr.org/download/antlr-4.12.0-complete.jar
+wget https://www.antlr.org/download/antlr-4.13.2-complete.jar
 ```
