@@ -1,28 +1,27 @@
 ﻿using System;
 
-namespace Blinkenlights.Basic.App.Statements
+namespace Blinkenlights.Basic.App.Statements;
+
+public class GosubStatement : IStatement
 {
-    public class GosubStatement : IStatement
+    public int TargetLineNumber { get; }
+
+    public GosubStatement(int targetLineNumber)
     {
-        public int TargetLineNumber { get; }
+        TargetLineNumber = targetLineNumber;
+    }
 
-        public GosubStatement(int targetLineNumber)
+    public void Execute(Interpreter interpreter)
+    {
+        try
         {
-            TargetLineNumber = targetLineNumber;
+            interpreter.PushLineNumber();
+            interpreter.GotoLine(TargetLineNumber);
         }
-
-        public void Execute(Interpreter interpreter)
+        catch (ArgumentException)
         {
-            try
-            {
-                interpreter.PushLineNumber();
-                interpreter.GotoLine(TargetLineNumber);
-            }
-            catch (ArgumentException)
-            {
-                interpreter.ErrorWriter.WriteLine($"! Target line number {TargetLineNumber} does not exist");
-                interpreter.Stop();
-            }
+            interpreter.ErrorWriter.WriteLine($"! Target line number {TargetLineNumber} does not exist");
+            interpreter.Stop();
         }
     }
 }

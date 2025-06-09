@@ -1,9 +1,9 @@
 ﻿using Blinkenlights.Basic.App.Statements;
 using Blinkenlights.Basic.Gen;
-using System;
 using System.IO;
 
 namespace Blinkenlights.Basic.App.Visitors;
+
 public class StatementVisitor : BasicBaseVisitor<IStatement>
 {
     private readonly TextWriter _error;

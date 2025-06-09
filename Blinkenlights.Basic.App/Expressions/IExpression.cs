@@ -1,7 +1,6 @@
-﻿namespace Blinkenlights.Basic.App.Expressions
+﻿namespace Blinkenlights.Basic.App.Expressions;
+
+public interface IExpression
 {
-    public interface IExpression
-    {
-        int Calculate(Interpreter interpreter);
-    }
+    int Calculate(Interpreter interpreter);
 }

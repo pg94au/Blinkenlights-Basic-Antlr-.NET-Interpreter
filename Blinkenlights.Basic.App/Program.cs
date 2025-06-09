@@ -1,22 +1,21 @@
 ﻿using System;
 using System.IO;
 
-namespace Blinkenlights.Basic.App
+namespace Blinkenlights.Basic.App;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        if (args.Length != 1)
         {
-            if (args.Length != 1)
-            {
-                Console.WriteLine("Usage: dotnet run <programFile>");
-                return;
-            }
-
-            var program = File.ReadAllText(args[0]);
-
-            var interpreter = new Interpreter(program);
-            interpreter.ExecuteProgram();
+            Console.WriteLine("Usage: dotnet run <programFile>");
+            return;
         }
+
+        var program = File.ReadAllText(args[0]);
+
+        var interpreter = new Interpreter(program);
+        interpreter.ExecuteProgram();
     }
 }
