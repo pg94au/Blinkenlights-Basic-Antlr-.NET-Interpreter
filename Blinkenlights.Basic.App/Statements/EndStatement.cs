@@ -1,10 +1,9 @@
-﻿namespace Blinkenlights.Basic.App.Statements
+﻿namespace Blinkenlights.Basic.App.Statements;
+
+public class EndStatement : IStatement
 {
-    public class EndStatement : IStatement
+    public void Execute(Interpreter interpreter)
     {
-        public void Execute(Interpreter interpreter)
-        {
-            interpreter.End();
-        }
+        interpreter.End();
     }
 }

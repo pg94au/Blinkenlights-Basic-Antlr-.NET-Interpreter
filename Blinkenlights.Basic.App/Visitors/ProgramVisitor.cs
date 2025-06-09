@@ -3,33 +3,31 @@ using System.IO;
 using Blinkenlights.Basic.App.Statements;
 using Blinkenlights.Basic.Gen;
 
-namespace Blinkenlights.Basic.App.Visitors
+namespace Blinkenlights.Basic.App.Visitors;
+
+public class ProgramVisitor : BasicBaseVisitor<string>
 {
-    public class ProgramVisitor : BasicBaseVisitor<string>
+    private readonly TextWriter _error;
+
+    public ProgramVisitor(TextWriter error)
     {
-        private readonly TextWriter _error;
+        _error = error;
+    }
 
-        public ProgramVisitor(TextWriter error)
+    public SortedDictionary<int, IStatement> Statements { get; } = new();
+
+    public override string VisitLine(BasicParser.LineContext context)
+    {
+        var currentLineNumber = int.Parse(context.lineNum().INT().ToString());
+
+        var statementVisitor = new StatementVisitor(_error);
+        var statement = statementVisitor.Visit(context.statement());
+
+        if (statement != null)
         {
-            _error = error;
+            Statements[currentLineNumber] = statement;
         }
 
-        public SortedDictionary<int, IStatement> Statements { get; } = new();
-
-        public override string VisitLine(BasicParser.LineContext context)
-        {
-            var currentLineNumber = int.Parse(context.lineNum().INT().ToString());
-
-            var statementVisitor = new StatementVisitor(_error);
-            var statement = statementVisitor.Visit(context.statement());
-
-            if (statement != null)
-            {
-                Statements[currentLineNumber] = statement;
-            }
-
-            return base.VisitLine(context);
-        }
+        return base.VisitLine(context);
     }
 }
- 

@@ -1,23 +1,22 @@
-﻿namespace Blinkenlights.Basic.App.Statements
+﻿namespace Blinkenlights.Basic.App.Statements;
+
+public class PrintStatement : IStatement
 {
-    public class PrintStatement : IStatement
+    public PrintArgument[] PrintArguments { get; }
+
+    public PrintStatement(PrintArgument[] printArguments)
     {
-        public PrintArgument[] PrintArguments { get; }
+        PrintArguments = printArguments;
+    }
 
-        public PrintStatement(PrintArgument[] printArguments)
+    public void Execute(Interpreter interpreter)
+    {
+        foreach (var printArgument in PrintArguments)
         {
-            PrintArguments = printArguments;
+            interpreter.OutputWriter.Write(printArgument.ToString(interpreter));
         }
 
-        public void Execute(Interpreter interpreter)
-        {
-            foreach (var printArgument in PrintArguments)
-            {
-                interpreter.OutputWriter.Write(printArgument.ToString(interpreter));
-            }
-
-            interpreter.OutputWriter.WriteLine();
-            interpreter.AdvanceLine();
-        }
+        interpreter.OutputWriter.WriteLine();
+        interpreter.AdvanceLine();
     }
 }

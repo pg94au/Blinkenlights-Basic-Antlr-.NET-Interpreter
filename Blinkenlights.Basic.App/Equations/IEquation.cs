@@ -1,7 +1,6 @@
-﻿namespace Blinkenlights.Basic.App.Equations
+﻿namespace Blinkenlights.Basic.App.Equations;
+
+public interface IEquation
 {
-    public interface IEquation
-    {
-        bool Solve(Interpreter interpreter);
-    }
+    bool Solve(Interpreter interpreter);
 }

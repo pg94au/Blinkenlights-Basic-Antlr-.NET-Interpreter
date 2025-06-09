@@ -1,14 +1,14 @@
 ﻿using NUnit.Framework;
 
-namespace Blinkenlights.Basic.Tests.Statements
+namespace Blinkenlights.Basic.Tests.Statements;
+
+[TestFixture]
+public class ForAndNextStatementTests
 {
-    [TestFixture]
-    public class ForAndNextStatementTests
+    [Test]
+    public void CanConstructLoopThatRepeatsStatements()
     {
-        [Test]
-        public void CanConstructLoopThatRepeatsStatements()
-        {
-            var interpreter = @"
+        var interpreter = @"
                 10 LET X=0
                 20 FOR I = 0 TO 5
                 30 LET X = I
@@ -16,13 +16,13 @@ namespace Blinkenlights.Basic.Tests.Statements
                 50 END
             ".Execute();
 
-            Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(5));
-        }
+        Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(5));
+    }
 
-        [Test]
-        public void LoopIsInclusiveWithinRange()
-        {
-            var interpreter = @"
+    [Test]
+    public void LoopIsInclusiveWithinRange()
+    {
+        var interpreter = @"
                 10 LET X=0
                 20 FOR I = 0 TO 3
                 30 LET X = X + I
@@ -30,13 +30,13 @@ namespace Blinkenlights.Basic.Tests.Statements
                 50 END
             ".Execute();
 
-            Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(0 + 1 + 2 + 3));
-        }
+        Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(0 + 1 + 2 + 3));
+    }
 
-        [Test]
-        public void ALoopWillAlwaysExecuteAtLeastOnce()
-        {
-            var interpreter = @"
+    [Test]
+    public void ALoopWillAlwaysExecuteAtLeastOnce()
+    {
+        var interpreter = @"
                 10 LET X=0
                 20 FOR I = 5 TO 5
                 30 LET X = I
@@ -44,13 +44,13 @@ namespace Blinkenlights.Basic.Tests.Statements
                 50 END
             ".Execute();
 
-            Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(5));
-        }
+        Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(5));
+    }
 
-        [Test]
-        public void CanNestLoops()
-        {
-            var interpreter = @"
+    [Test]
+    public void CanNestLoops()
+    {
+        var interpreter = @"
                 10 LET X=0
                 20 FOR I = 1 TO 5
                 30 FOR J = 1 TO 2
@@ -59,13 +59,13 @@ namespace Blinkenlights.Basic.Tests.Statements
                 60 NEXT I
             ".Execute();
 
-            Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(5 * 2));
-        }
+        Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(5 * 2));
+    }
 
-        [Test]
-        public void MismatchedNextStatementStopsExecutionAndPrintsError()
-        {
-            var interpreter = @"
+    [Test]
+    public void MismatchedNextStatementStopsExecutionAndPrintsError()
+    {
+        var interpreter = @"
                 10 LET X = 1
                 20 FOR Y = 1 TO 5
                 30 LET X = X + 1
@@ -74,9 +74,8 @@ namespace Blinkenlights.Basic.Tests.Statements
                 60 END
             ".ExecuteWithError(out var errorOutput);
 
-            Assert.That(interpreter.Finished, Is.False);
-            Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(2));
-            Assert.That(errorOutput.Length, Is.GreaterThan(0));
-        }
+        Assert.That(interpreter.Finished, Is.False);
+        Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(2));
+        Assert.That(errorOutput.Length, Is.GreaterThan(0));
     }
 }

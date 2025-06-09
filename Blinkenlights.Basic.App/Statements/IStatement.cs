@@ -1,7 +1,6 @@
-﻿namespace Blinkenlights.Basic.App.Statements
+﻿namespace Blinkenlights.Basic.App.Statements;
+
+public interface IStatement
 {
-    public interface IStatement
-    {
-        void Execute(Interpreter interpreter);
-    }
+    void Execute(Interpreter interpreter);
 }

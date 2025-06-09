@@ -1,36 +1,35 @@
 ﻿using Blinkenlights.Basic.App.Expressions;
 
-namespace Blinkenlights.Basic.App.Statements
+namespace Blinkenlights.Basic.App.Statements;
+
+public class PrintArgument
 {
-    public class PrintArgument
+    public string Text { get; }
+    public IExpression Expression { get; }
+
+    private PrintArgument(string text, IExpression expression)
     {
-        public string Text { get; }
-        public IExpression Expression { get; }
+        Text = text;
+        Expression = expression;
+    }
 
-        private PrintArgument(string text, IExpression expression)
+    public static PrintArgument FromText(string text)
+    {
+        return new PrintArgument(text, null);
+    }
+
+    public static PrintArgument FromExpression(IExpression expression)
+    {
+        return new PrintArgument(null, expression);
+    }
+
+    public string ToString(Interpreter interpreter)
+    {
+        if (Text != null)
         {
-            Text = text;
-            Expression = expression;
+            return Text;
         }
-
-        public static PrintArgument FromText(string text)
-        {
-            return new PrintArgument(text, null);
-        }
-
-        public static PrintArgument FromExpression(IExpression expression)
-        {
-            return new PrintArgument(null, expression);
-        }
-
-        public string ToString(Interpreter interpreter)
-        {
-            if (Text != null)
-            {
-                return Text;
-            }
             
-            return Expression.Calculate(interpreter).ToString();
-        }
+        return Expression.Calculate(interpreter).ToString();
     }
 }
