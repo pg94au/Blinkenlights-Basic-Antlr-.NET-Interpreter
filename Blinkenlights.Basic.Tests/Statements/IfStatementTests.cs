@@ -55,7 +55,7 @@ public class IfStatementTests
         var interpreter = $@"
                 10 LET X = 250
                 20 IF {expression} THEN GOTO 40
-                30 LET X=500
+                30 LET X = 500
                 40 END
             ".Execute();
 
@@ -68,7 +68,7 @@ public class IfStatementTests
         var interpreter = @"
                 10 LET X = 250
                 20 IF X > 0 THEN END
-                30 X = 500
+                30 LET X = 500
                 40 END
             ".Execute();
 
@@ -87,6 +87,18 @@ public class IfStatementTests
             ".Execute();
 
         Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(500));
+    }
+
+    [Test]
+    public void ConditionalStatementCanBeIf()
+    {
+        var interpreter = @"
+                10 LET X = 250
+                20 IF X > 0 THEN IF X < 500 THEN LET X = 1
+                30 END
+            ".Execute();
+
+        Assert.That(interpreter.ReadVariable("X"), Is.EqualTo(1));
     }
 
     [Test]
